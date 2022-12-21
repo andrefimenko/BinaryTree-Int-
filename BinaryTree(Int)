@@ -1,0 +1,53 @@
+import scala.util.Random
+
+class Node {
+  var value: Int = _
+  var left: Node = _
+  var right: Node = _
+
+}
+
+class Tree {
+
+  var root: Node = _
+
+  def insert(v: Int): Unit = {
+    var newNode: Node = new Node
+    newNode.value = v
+    if (root == null)
+      root = newNode
+    else insertTree(root, newNode)
+  }
+  def insertTree(node: Node, newNode: Node): Unit = {
+    if (newNode.value < node.value)
+      if (node.left == null)
+        node.left = newNode
+      else insertTree(node.left, newNode)
+    else if (newNode.value > node.value)
+      if (node.right == null)
+        node.right = newNode
+      else insertTree(node.right, newNode)
+  }
+  def travel(): Unit = {
+    travelTree(root)
+  }
+  def travelTree(node: Node): Unit = {
+    if (node != null) {
+      travelTree(node.left)
+      print(node.value + " ")
+      travelTree(node.right)
+    }
+  }
+}
+
+object Test {
+  def main(args: Array[String]): Unit = {
+
+    val tree = new Tree
+
+    for (i <- List.fill(100)(Random.between(-100, 100)))
+      tree.insert(i)
+
+    tree.travel
+  }
+}
